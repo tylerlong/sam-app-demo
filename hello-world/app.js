@@ -38,7 +38,10 @@ const serverlessHTTP = require('serverless-http');
 
 const app = express();
 app.get('/', (req, res) => {
-  res.send('Hello from express!');
+  res.send('Hello from express /!');
 })
+app.get('/test', (req, res) => {
+    res.send('Hello from express /test!');
+  })
 
 exports.newHandler = serverlessHTTP(app);
