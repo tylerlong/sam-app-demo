@@ -33,15 +33,28 @@ exports.lambdaHandler = async (event, context) => {
 };
 
 
-const express = require('express');
-const serverlessHTTP = require('serverless-http');
+// const express = require('express');
+// const serverlessHTTP = require('serverless-http');
 
-const app = express();
-app.get('/', (req, res) => {
-  res.send('Hello from express /!');
-})
-app.get('/test', (req, res) => {
-    res.send('Hello from express /test!');
-  })
+// const app = express();
+// app.get('/', (req, res) => {
+//   res.send('Hello from express /!');
+// })
+// app.get('/test', (req, res) => {
+//     res.send('Hello from express /test!');
+//   })
 
-exports.newHandler = serverlessHTTP(app);
+// exports.newHandler = serverlessHTTP(app);
+
+
+const createApp = require('ringcentral-chatbot/dist/apps').default
+const serverlessHTTP = require('serverless-http')
+
+const handle = async event => {
+const { type, text, group, bot } = event
+    if (type === 'Message4Bot' && text === 'ping') {
+        await bot.sendMessage(group.id, { text: 'pong' })
+    }
+}
+const app = createApp(handle)
+exports.newHandler = serverlessHTTP(app)
