@@ -31,3 +31,14 @@ exports.lambdaHandler = async (event, context) => {
 
     return response
 };
+
+
+const express = require('express');
+const serverlessHTTP = require('serverless-http');
+
+const app = express();
+app.get('/', (req, res) => {
+  res.send('Hello from express!');
+})
+
+exports.newHandler = serverlessHTTP(app);
